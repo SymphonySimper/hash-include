@@ -1,4 +1,4 @@
-package com.sudos.hash_include
+package com.example.hashinclude
 
 import io.flutter.embedding.android.FlutterActivity
 

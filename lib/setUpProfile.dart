@@ -79,10 +79,10 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
             Stack(
               children: [
                 Container(
-                  padding: EdgeInsets.only(left: 10),
+                  padding: EdgeInsets.only(left: 25),
                   child: Center(
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/avatar.png'),
+                      backgroundImage: AssetImage('images/avatar.png'),
                       radius: 73,
                     ),
                   ),
@@ -115,7 +115,26 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                 ),
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(top: 15),
-                    hintText: 'username',
+                    hintText: 'name',
+                    hintStyle: TextStyle(
+                      color: Colors.white70,
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white))),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 20),
+              child: TextField(
+                controller: _nameController,
+                cursorColor: Colors.white,
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w200,
+                ),
+                decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(top: 45),
+                    hintText: 'user id',
                     hintStyle: TextStyle(
                       color: Colors.white70,
                     ),
@@ -125,7 +144,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
             ),
             Container(
                 padding: EdgeInsets.only(
-                  top: 20,
+                  top: 40,
                   bottom: 20,
                   left: 200,
                 ),
@@ -133,16 +152,16 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   text: 'Signup',
                   nav: '/intro',
                 )),
-            Padding(
-              padding: EdgeInsets.only(left: 123, right: 123, top: 172),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                'SRI SAIRAM COLLEGE OF ENGINEERING',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+//            Padding(
+//              padding: EdgeInsets.only(left: 123, right: 123, top: 172),
+//            ),
+//            Container(
+//              padding: EdgeInsets.all(10),
+//              child: Text(
+//                'SRI SAIRAM COLLEGE OF ENGINEERING',
+//                style: TextStyle(color: Colors.white),
+//              ),
+//            ),
           ],
         ),
       ),

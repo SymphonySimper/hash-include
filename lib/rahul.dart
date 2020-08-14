@@ -1,151 +1,251 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
-class Home extends StatefulWidget {
-  const Home();
+class ListofProg extends StatefulWidget {
   @override
-  _HomeState createState() => new _HomeState();
+  _ListofProgState createState() => _ListofProgState();
 }
 
-class _HomeState extends State<Home> {
-  static const String flutterUrl = 'https://flutter.io/';
-  static const String githubUrl = 'http://www.codesnippettalk.com';
-
-  static const TextStyle linkStyle = const TextStyle(
-    color: Colors.blue,
-    decoration: TextDecoration.underline,
-  );
-
-  TapGestureRecognizer _flutterTapRecognizer;
-  TapGestureRecognizer _githubTapRecognizer;
-
-  @override
-  void initState() {
-    super.initState();
-    _flutterTapRecognizer = new TapGestureRecognizer()
-      ..onTap = () => _openUrl(flutterUrl);
-    _githubTapRecognizer = new TapGestureRecognizer()
-      ..onTap = () => _openUrl(githubUrl);
-  }
-
-  @override
-  void dispose() {
-    _flutterTapRecognizer.dispose();
-    _githubTapRecognizer.dispose();
-    super.dispose();
-  }
-
-  void _openUrl(String url) async {
-    // Close the about dialog.
-    Navigator.pop(context);
-  }
-
-  Widget home(BuildContext context) {
-    return new Material(
-      child: new RaisedButton(
-        child: const Text('Show Pop-up'),
-        color: Theme.of(context).accentColor,
-        elevation: 4.0,
-        splashColor: Colors.amberAccent,
-        textColor: const Color(0xFFFFFFFF),
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => _buildAboutDialog(context),
-          );
-          // Perform some action
-        },
-      ),
-    );
-  }
-
-  Widget _buildAboutDialog(BuildContext context) {
-    return new AlertDialog(
-      title: const Text('About Pop up'),
-      content: new Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _buildAboutText(),
-          _buildLogoAttribution(),
-        ],
-      ),
-      actions: <Widget>[
-        new FlatButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          textColor: Theme.of(context).primaryColor,
-          child: const Text('Okay, got it!'),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildAboutText() {
-    return new RichText(
-      text: new TextSpan(
-        text:
-            'Android Popup Menu displays the menu below the anchor text if space is available otherwise above the anchor text. It disappears if you click outside the popup menu.\n\n',
-        style: const TextStyle(color: Colors.black87),
-        children: <TextSpan>[
-          const TextSpan(text: 'The app was developed with '),
-          new TextSpan(
-            text: 'Flutter',
-            recognizer: _flutterTapRecognizer,
-            style: linkStyle,
-          ),
-          const TextSpan(
-            text: ' and it\'s open source; check out the source '
-                'code yourself from ',
-          ),
-          new TextSpan(
-            text: 'www.codesnippettalk.com',
-            recognizer: _githubTapRecognizer,
-            style: linkStyle,
-          ),
-          const TextSpan(text: '.'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLogoAttribution() {
-    return new Padding(
-      padding: const EdgeInsets.only(top: 16.0),
-      child: new Row(
-        children: <Widget>[
-          new Padding(
-            padding: const EdgeInsets.only(top: 0.0),
-            child: new Image.asset(
-              "assets/flutter.png",
-              width: 32.0,
-            ),
-          ),
-          const Expanded(
-            child: const Padding(
-              padding: const EdgeInsets.only(left: 12.0),
-              child: const Text(
-                'Popup window is like a dialog box that gains complete focus when it appears on screen.',
-                style: const TextStyle(fontSize: 12.0),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
+class _ListofProgState extends State<ListofProg> {
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      padding: const EdgeInsets.only(top: 100.0),
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: new Column(
-        children: <Widget>[
-          home(context),
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+              title: Text('this is the title'),
+              icon: Icon(
+                Icons.ac_unit,
+              )),
+          BottomNavigationBarItem(
+              title: Text('this is the title'),
+              backgroundColor: Colors.blue,
+              icon: Icon(
+                Icons.ac_unit,
+              )),
         ],
+      ),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+          colors: [Color(0xFFCD37FF), Color(0xFF40C9FF)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        )),
+        child: Column(children: [
+          // FittedBox(
+          //   child: Image.asset('assets/background.png'),
+          //   fit: BoxFit.fill,
+          // ),
+
+          Stack(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(
+                  right: 90.0,
+                  top: 55,
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(36),
+                        topRight: Radius.circular(36)),
+                  ),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search',
+                      suffixIcon: Icon(
+                        Icons.search,
+                        color: Color(0xFF5254D8),
+                      ),
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.only(
+                        left: 20,
+                        top: 14,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(
+                  top: 60,
+                  left: 360,
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, '/profile');
+                  },
+                  child: CircleAvatar(
+                    //foregroundColor: Colors.red,
+
+                    //  backgroundColor: Colors.blueAccent,
+                    backgroundImage: AssetImage('images/avatar.png'),
+                    radius: 22,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          Expanded(
+            child: PageView(
+              scrollDirection: Axis.horizontal,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    print('clicked');
+                  },
+                  child: Container(
+                    child: Image.asset('sem_cards/LabCardSem301.png'),
+                    width: 50,
+                    height: 50,
+                  ),
+                ),
+                Container(
+                  child: Image.asset('sem_cards/LabCardSem302.png'),
+                  width: 0,
+                  height: 50,
+                ),
+                Container(
+                  child: Image.asset('sem_cards/LabCardSem401.png'),
+                  width: 0,
+                  height: 50,
+                ),
+                Container(
+                  child: Image.asset('sem_cards/LabCardSem402.png'),
+                  width: 0,
+                  height: 50,
+                ),
+                Container(
+                  child: Image.asset('sem_cards/LabCardSem501.png'),
+                  width: 0,
+                  height: 50,
+                ),
+              ],
+            ),
+          ),
+
+          Expanded(
+            child: ListView(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 10, top: 10),
+                  child: Text(
+                    'Programs',
+                  ),
+                ),
+                Container(
+                  //  height: 13300,
+
+                  child: Column(children: [
+                    Stack(children: [
+                      Container(
+                        padding: EdgeInsets.only(left: 25, right: 20, top: 30),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                          ),
+                          padding: EdgeInsets.only(top: 7),
+                          height: 80,
+                          // color: Colors.white,
+                          child: ListTile(
+                            onTap: () {
+                              Container(
+                                color: Colors.amber,
+                                child: Text('hello'),
+                              );
+                            },
+                            title: Text(
+                              'this is a text',
+                            ),
+                            trailing: Icon(
+                              Icons.chevron_right,
+                              color: Color(0xFF394A33),
+                            ),
+                            subtitle: Padding(
+                              padding: EdgeInsets.only(left: 6.0, top: 4),
+                              child: Text(
+                                'By Sowmya AM, CSE',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30, bottom: 5, top: 18),
+                        child: Container(
+                          padding: EdgeInsets.only(left: 9, top: 0),
+                          height: 20,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF394AA3),
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                          ),
+                          // color: Color(0xFF394AA3),
+                          child: Text(
+                            'C++',
+                          ),
+                        ),
+                      ),
+                    ]),
+                  ]),
+                )
+              ],
+            ),
+          )
+        ]),
       ),
     );
   }
+}
+
+void see() {
+  Container(
+    padding: EdgeInsets.only(left: 25, right: 20, top: 30),
+    child: Text('hooo'),
+    // Container(
+    //      decoration: BoxDecoration(
+    //                     color: Colors.white,
+
+    //   borderRadius: BorderRadius.all(Radius.circular(12)),
+
+    // ),
+    //   padding: EdgeInsets.only(top:7),
+    //   height: 80,
+    //  // color: Colors.white,
+    //   child: ListTile(
+    //     onLongPress: (){
+    //       //Popp();
+    //     },
+    //     title:  Text('thisssssssssssssssss',
+    //       style: GoogleFonts.poppins(
+    //         fontWeight:FontWeight.w400,
+    //         fontSize: 18,
+    //      color:
+    //      //Colors.blue,
+    //        Colors.red,
+    //       ),
+    //     ),
+    //    trailing:Icon(Icons.chevron_right,
+    //    color: Color(0xFF394A33),
+    //    ),
+    //     subtitle: Padding(
+    //       padding:  EdgeInsets.only(left:6.0,top:4),
+    //       child: Text('By Sowmya AM, CSE',
+    //       style: GoogleFonts.poppins(
+    //           fontWeight:FontWeight.w400,
+    //           fontSize: 13,
+    //        color: Colors.black,
+    //         ),
+
+    //       ),
+    //     ),
+    //   ),
+    // ),
+  );
 }

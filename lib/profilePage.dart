@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hashinclude/localWidgets.dart';
 
 import 'localWidgets.dart';
@@ -38,7 +40,7 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 18.0),
+                  padding: const EdgeInsets.only(left: 13.0),
                   child: Headingg(
                     text: 'Profile',
                   ),
@@ -46,19 +48,109 @@ class _ProfileState extends State<Profile> {
               ],
             ),
           ),
-          Stack(children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 78.0),
-              child: Avatar(
-                radius: 55,
+          Padding(
+            padding: EdgeInsets.only(top: 30),
+            child: SizedBox(
+                width: 390,
+                height: 280,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(12))),
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 28.0),
+                    child: Column(children: [
+                      AvatarColor(
+                        colorradius: 63,
+                        radius: 60,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          'Shrek',
+                          style: GoogleFonts.poppins(
+                            color: Color(0xFF7277F1),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 22,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '@shrek2020',
+                        style: GoogleFonts.poppins(
+                          color: Color(0xFF7277F1),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text(
+                        'shrek@gmail.com',
+                        style: GoogleFonts.poppins(
+                          color: Color(0xFF7277F1),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ]),
+                  ),
+                )
+//
+
+                ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 18.0),
+            child: SizedBox(
+              width: 390,
+              height: 50,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                child: Container(
+                    padding: const EdgeInsets.only(
+                      top: 0,
+                      right: 228,
+                    ),
+                    child: FlatButton(
+                      onPressed: () {},
+                      child: Text(
+                        'My Programs',
+                        style: GoogleFonts.poppins(
+                          color: Color(0xFF7277F1),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 17,
+                        ),
+                      ),
+                    )),
               ),
             ),
-          ]),
-          FlatButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/editprofile');
-            },
-            child: Text('edit'),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 18.0),
+            child: SizedBox(
+              width: 390,
+              height: 50,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                child: Container(
+                    padding: const EdgeInsets.only(
+                      top: 0,
+                      right: 228,
+                    ),
+                    child: FlatButton(
+                      onPressed: () {},
+                      child: Text(
+                        'My Questions',
+                        style: GoogleFonts.poppins(
+                          color: Color(0xFF7277F1),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 17,
+                        ),
+                      ),
+                    )),
+              ),
+            ),
           )
         ]),
       ),

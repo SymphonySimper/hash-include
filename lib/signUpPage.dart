@@ -1,26 +1,27 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'localWidgets.dart';
-
-class SignupPage extends StatefulWidget {
+import 'package:hashinclude/widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hashinclude/models/usermodel.dart';
+class SignUpPage extends StatefulWidget {
   @override
-  _SignupPageState createState() => _SignupPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _SignUpPageState extends State<SignUpPage> {
+  
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email, _password, _confirmPassword;
-
+  
   @override
   void initState() {
     super.initState();
     checkAuthentication();
   }
 
-//
+
   checkAuthentication() async {
     _auth.onAuthStateChanged.listen((user) {
       if (user != null) {
@@ -39,32 +40,21 @@ class _SignupPageState extends State<SignupPage> {
           FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
                   email: _email, password: _password))
               .user;
+              if(user!=null){
+                UserDetails().updateUser('', '', _email, user.uid, '',user);
+          Firestore.instance.collection('users').document(user.uid).setData({
+            'email':_email,
+         
+          
+          });
+              }
         } catch (e) {
-          showError(e.message);
+          // showError(e.message);
         }
       } else {
-        showError("passwords do not match");
+        // showError("passwords do not match");
       }
     }
-  }
-
-  showError(String errorMessage) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text(errorMessage),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        });
   }
 
   @override
@@ -196,7 +186,10 @@ class _SignupPageState extends State<SignupPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(36))),
-                        onPressed: signUp,
+                        onPressed:
+                          signUp,
+
+                        
                         child: Text('signup',
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w600,
@@ -216,13 +209,7 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     Padding(padding: EdgeInsets.all(112)),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        'SRI SAIRAM COLLEGE OF ENGINEERING',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
+                  
                   ],
                 ),
               ),

@@ -13,6 +13,7 @@ class _IntroPageState extends State<IntroPage> {
       body: SafeArea(
           child: Stack(children: [
         Container(
+      
           padding: EdgeInsets.all(329.7),
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -20,14 +21,7 @@ class _IntroPageState extends State<IntroPage> {
                   end: Alignment.bottomRight,
                   colors: [Color(0xFFCD37FF), Color(0xFF40C9FF)])),
         ),
-//        Padding(
-//          padding: EdgeInsets.fromLTRB(0, 0, 10, 290),
-//          child: Container(
-//            decoration: new BoxDecoration(
-//                image:
-//                    DecorationImage(image: new AssetImage("assets/Logo1.png"))),
-//          ),
-//        ),
+
         Container(
           padding: EdgeInsets.fromLTRB(58, 340, 0, 0),
           child: Text(
@@ -53,12 +47,9 @@ class _IntroPageState extends State<IntroPage> {
                 color: Colors.white,
               ),
             ),
-            onPressed: ()
-//            async
-                {
-//              Navigator.pushNamed(context, "/login");
-              Navigator.pushReplacementNamed(context, '/lop');
-            },
+            onPressed: () {
+             Navigator.pushNamed(context, "/login");
+                },
             borderSide: BorderSide(
               color: Colors.white,
               style: BorderStyle.solid,
@@ -74,11 +65,10 @@ class _IntroPageState extends State<IntroPage> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(32.0))),
             onPressed: () {
-//              Navigator.pushNamed(context, '/login');
-              Navigator.pushReplacementNamed(context, '/myprograms');
+             Navigator.pushNamed(context, '/login');
             },
             child: Text(
-              'Sign up',
+              'Sign in',
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w600,
                 fontSize: 17,
@@ -87,7 +77,27 @@ class _IntroPageState extends State<IntroPage> {
             ),
           ),
         ),
-        //College(),
+            Padding(
+              padding: EdgeInsets.fromLTRB(92, 552, 0, 10),
+              child: RaisedButton(
+                color: Colors.white,
+                padding: EdgeInsets.fromLTRB(88, 8, 88, 8),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(32.0))),
+                onPressed: () {
+             Navigator.pushNamed(context, '/signup');
+                },
+                child: Text(
+                  'Sign up',
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 17,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
+        
       ])),
     );
   }

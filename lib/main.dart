@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Compile Anywhere',
-      initialRoute: '/intro',
+      initialRoute: '/',
       onGenerateRoute: Router.generateRoute,
     );
   }

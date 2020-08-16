@@ -1,28 +1,115 @@
-//import 'package:firebase_auth/firebase_auth.dart';
+// import 'dart:html';
+import 'dart:async';
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hashinclude/localWidgets.dart';
+import 'package:hashinclude/models/usermodel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
 
-class SetupProfilePage extends StatefulWidget {
+
+
+
+class SetUpProfilePage extends StatefulWidget {
   @override
-  _SetupProfilePageState createState() => _SetupProfilePageState();
+  
+  _SetUpProfilePageState createState() => _SetUpProfilePageState();
 }
 
-class _SetupProfilePageState extends State<SetupProfilePage> {
+class _SetUpProfilePageState extends State<SetUpProfilePage> {
+
+   
+  File sampleImage;
+  String imageUrl;
+
   TextEditingController _nameController = new TextEditingController();
-//  final FirebaseAuth _auth = FirebaseAuth.instance;
-  setupProfile() async {
-//    UserUpdateInfo updateInfo = UserUpdateInfo();
-//    updateInfo.displayName = _nameController.text;
-//    _auth.onAuthStateChanged.listen((user) {
-//      if (user != null) {
-//        user
-//            .updateProfile(updateInfo)
-//            .then((value) => {Navigator.pushReplacementNamed(context, '/intro')});
-//      }
-//    });
+    TextEditingController _usernameController = new TextEditingController();
+
+
+    setUpProfile(String name,String username)async{
+      String imageName=UserDetails().uid+'.jpg';
+        final StorageReference firebaseStorageRef =
+    FirebaseStorage.instance.ref().child('Avatar/$imageName');
+      StorageUploadTask task = firebaseStorageRef.putFile(sampleImage);
+    StorageTaskSnapshot snapshotTask =  await task.onComplete;
+    String downloadUrl = await snapshotTask.ref.getDownloadURL();
+
+     UserUpdateInfo updateUser=UserUpdateInfo();
+     updateUser.displayName=name;
+     UserDetails().user.updateProfile(updateUser);
+     Firestore.instance.collection('users').document(UserDetails().uid).updateData({'name':name,'username':username,'profilepicurl':downloadUrl});
+    UserDetails().name=name;
+        UserDetails().username=username;
+    UserDetails().profilepic=downloadUrl;
+Navigator.pushReplacementNamed(context, '/home');
+
+     }
+Future <void> _optionsDialogBox(){
+    return showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          backgroundColor: Colors.blue,
+          shape: RoundedRectangleBorder(),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  child: Text('Take a Picture',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                  ),
+                  ),
+                  onTap: getImageCam,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                ),
+                  GestureDetector(
+                  child: Text('Choose from Gallery',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                  ),
+                  ),
+                  onTap: getImageGal,
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+    );
   }
 
+  Future getImageCam() async {
+     var tempImage = await ImagePicker().getImage(source: ImageSource.camera);
+
+
+    setState(() {
+      sampleImage = File (tempImage.path);
+      // imageUrl='uploaded';
+    });
+  
+  }
+
+  Future getImageGal() async {
+    var tempImage = await ImagePicker().getImage(source: ImageSource.gallery);
+
+    setState(() {
+       sampleImage = File (tempImage.path);
+            // imageUrl='uploaded';
+
+    });
+  }
+   void initState() {
+     imageUrl=UserDetails().profilepic;
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,9 +127,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
             Padding(
               padding: EdgeInsets.only(
                 top: 48,
-                // left: 12,
-                // right: 12
-                // ,bottom: 12
+              
               ),
             ),
             Row(
@@ -82,7 +167,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   padding: EdgeInsets.only(left: 25),
                   child: Center(
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('images/avatar.png'),
+                      backgroundImage:sampleImage==null? AssetImage('images/avatar.png'):FileImage(sampleImage),
                       radius: 73,
                     ),
                   ),
@@ -95,7 +180,11 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                       color: Colors.white,
                       height: 27,
                       width: 27,
-                      child: Icon(Icons.add, color: Colors.blue, size: 27),
+                      child: IconButton(
+                        onPressed:(){
+                        _optionsDialogBox();
+                        } ,
+                        icon: Icon(Icons.add, color: Colors.blue, size: 27)),
                     ),
                   ),
                 )
@@ -126,7 +215,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20),
               child: TextField(
-                controller: _nameController,
+                controller: _usernameController,
                 cursorColor: Colors.white,
                 style: GoogleFonts.poppins(
                   color: Colors.white,
@@ -134,7 +223,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                 ),
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(top: 45),
-                    hintText: 'user id',
+                    hintText: 'user name',
                     hintStyle: TextStyle(
                       color: Colors.white70,
                     ),
@@ -148,20 +237,27 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   bottom: 20,
                   left: 200,
                 ),
-                child: Buttons(
-                  text: 'Signup',
-                  nav: '/intro',
-                )),
-//            Padding(
-//              padding: EdgeInsets.only(left: 123, right: 123, top: 172),
-//            ),
-//            Container(
-//              padding: EdgeInsets.all(10),
-//              child: Text(
-//                'SRI SAIRAM COLLEGE OF ENGINEERING',
-//                style: TextStyle(color: Colors.white),
-//              ),
-//            ),
+                child: RaisedButton(
+      padding: EdgeInsets.fromLTRB(40, 7, 40, 7),
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(36))),
+      onPressed: () {
+        setUpProfile(
+          _nameController.text,
+          _usernameController.text
+        );
+       
+      },
+      child: Text('Setup profile',
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF7277F1),
+            fontSize: 19,
+          )),
+    )
+                
+                ),
           ],
         ),
       ),

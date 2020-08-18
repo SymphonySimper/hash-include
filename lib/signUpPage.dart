@@ -1,16 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hashinclude/widget.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hashinclude/models/usermodel.dart';
-class SignUpPage extends StatefulWidget {
+import 'package:hashinclude/widget.dart';
+
+
+class SignupPage extends StatefulWidget {
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _SignupPageState createState() => _SignupPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  
+class _SignupPageState extends State<SignupPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email, _password, _confirmPassword;
@@ -49,10 +50,11 @@ class _SignUpPageState extends State<SignUpPage> {
           });
               }
         } catch (e) {
-          // showError(e.message);
+
+          showError(e.message,context);
         }
       } else {
-        // showError("passwords do not match");
+        showError("passwords do not match",context);
       }
     }
   }
@@ -60,39 +62,33 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFFCD37FF), Color(0xFF40C9FF)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: ThemeColor().returnColor())),
             ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 40,
+            SizedBox(
+              height: 50,
+              child: ListTile(
+                leading: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  SizedBox(
-                    width: 110,
-                  ),
-                  Text(
+                title: Align(
+                  alignment: Alignment(-0.3, 0),
+                  child: Text(
                     'Sign up',
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w600,
@@ -100,86 +96,101 @@ class _SignUpPageState extends State<SignUpPage> {
                       color: Colors.white,
                     ),
                   ),
-                ],
+                ),
               ),
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(top: 70, left: 20, right: 20),
-                      child: TextFormField(
-                        validator: (input) {
-                          if (input.isEmpty) {
-                            return 'Provide an Email';
-                          }
-                        },
-                        onSaved: (input) => _email = input,
-                        cursorColor: Colors.white,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(top: 15),
-                            hintText: 'email',
-                            hintStyle: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w200,
-                              color: Colors.white,
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white))),
-                      ),
+            ),
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 100,
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 15, right: 15),
+                          child: TextFormField(
+                            validator: (input) {
+                              if (input.isEmpty) {
+                                return 'Provide an Email';
+                              } 
+                            },
+                            onSaved: (input) => _email = input,
+                            cursorColor: Colors.white,
+                            style: TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(top: 15),
+                                hintText: 'email',
+                                hintStyle: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w200,
+                                  color: Colors.white,
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.white))),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          child: TextFormField(
+                            validator: (input) {
+                              if (input.length < 8) {
+                                return 'Password should be atleast 8 characters';
+                              } 
+                            },
+                            onSaved: (input) => _password = input,
+                            style: TextStyle(color: Colors.white),
+                            cursorColor: Colors.white,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(top: 15),
+                                hintText: 'password',
+                                hintStyle: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w200,
+                                  color: Colors.white,
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.white))),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(left: 15, right: 15),
+                          child: TextFormField(
+                            validator: (input) {
+                              if (input.length < 8) {
+                                return 'Password should Be atleast 8 Characters';
+                              } 
+                            },
+                            onSaved: (input) => _confirmPassword = input,
+                            style: TextStyle(color: Colors.white),
+                            cursorColor: Colors.white,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(top: 15),
+                                hintText: 'confirm password',
+                                hintStyle: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w200,
+                                  color: Colors.white,
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.white))),
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      padding: EdgeInsets.all(20),
-                      child: TextFormField(
-                        validator: (input) {
-                          if (input.length < 6) {
-                            return 'Password should Be atleast 6 Characters';
-                          }
-                        },
-                        onSaved: (input) => _password = input,
-                        style: TextStyle(color: Colors.white),
-                        cursorColor: Colors.white,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(top: 15),
-                            hintText: 'password',
-                            hintStyle: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w200,
-                              color: Colors.white,
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white))),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 20, right: 20, bottom: 0),
-                      child: TextFormField(
-                        validator: (input) {
-                          if (input.length < 6) {
-                            return 'Password should Be atleast 6 Characters';
-                          }
-                        },
-                        onSaved: (input) => _confirmPassword = input,
-                        style: TextStyle(color: Colors.white),
-                        cursorColor: Colors.white,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(top: 15),
-                            hintText: 'confirm password',
-                            hintStyle: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w200,
-                              color: Colors.white,
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white))),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(
-                        top: 20,
-                        bottom: 20,
-                        left: 220,
-                      ),
+                  ),
+                  SizedBox(
+                    height: 60,
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      padding: EdgeInsets.only(left: 30, right: 15),
                       child: RaisedButton(
                         padding: EdgeInsets.fromLTRB(40, 7, 40, 7),
                         color: Colors.white,
@@ -188,9 +199,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                 BorderRadius.all(Radius.circular(36))),
                         onPressed:
                           signUp,
-
-                        
-                        child: Text('signup',
+                       
+                        child: Text('Next',
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w600,
                               color: Color(0xFF7277F1),
@@ -198,23 +208,49 @@ class _SignUpPageState extends State<SignUpPage> {
                             )),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30, left: 58.0),
-                      child: OrLine(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 48.0),
-                      child: GoogleButton(
-                        nav: 'asf',
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                    child: OrLine(),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                    child: Center(
+                        child: RaisedButton(
+                      padding: EdgeInsets.fromLTRB(30, 11, 30, 11),
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(36))),
+                      onPressed: () {},
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        alignment: Alignment.center,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Image.asset(
+                              'images/Google_image.png',
+                              scale: 2.5,
+                            ),
+                            Text('Sign up with Google',
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF7277F1),
+                                  fontSize: 17,
+                                )),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(padding: EdgeInsets.all(112)),
-                  
-                  ],
-                ),
+                    )),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

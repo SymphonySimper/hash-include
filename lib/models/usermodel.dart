@@ -42,4 +42,5 @@ set username(String username){_username=username;}
 set email(String email){_email=email;}
 set uid(String uid){_uid=uid;}
 set profilepic(String profilepic){_profilepic=profilepic;}
+set user(FirebaseUser user){_user=user;}
 }

@@ -36,6 +36,13 @@ dependencies:
   persistent_bottom_nav_bar: any
   flutter_icons:
   expandable: ^2.2.0
+  solid_bottom_sheet: ^0.1.9
+  syntax_highlighter: ^0.1.1
+  flutter_highlight: 
+  progress_dialog: ^1.2.4
+  clipboard: ^0.1.2+8
+  firebase_storage:
+  image_picker: ^0.6.7+4
 
 
 

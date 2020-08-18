@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:hashinclude/editprofilepage.dart';
 import 'package:hashinclude/homepage.dart';
 import 'package:hashinclude/introPage.dart';
 import 'package:hashinclude/loginpage.dart';
+import 'package:hashinclude/myprogramspage.dart';
+import 'package:hashinclude/myquestions.dart';
+import 'package:hashinclude/programviewpage.dart';
+import 'package:hashinclude/questionviewpage.dart';
+import 'package:hashinclude/settingspage.dart';
 import 'package:hashinclude/setupprofile.dart';
 import 'package:hashinclude/signuppage.dart';
 import 'package:hashinclude/splashscreen.dart';
+
+import 'notificationpage.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -18,9 +26,21 @@ class Router {
         case '/login':
         return MaterialPageRoute(builder: (context) => LoginPage());
         case '/signup':
-        return MaterialPageRoute(builder: (context) => SignUpPage());
+        return MaterialPageRoute(builder: (context) => SignupPage());
         case '/setupprofile':
-        return MaterialPageRoute(builder: (context) => SetUpProfilePage());
+        return MaterialPageRoute(builder: (context) => SetupProfilePage());
+        case '/myquestions':
+        return MaterialPageRoute(builder: (context) => MyQuestions());
+        case '/myprograms':
+        return MaterialPageRoute(builder: (context) => MyPrograms());
+        case '/notifications':
+        return MaterialPageRoute(builder: (context) => Notifications());
+        case '/editprofile':
+        return MaterialPageRoute(builder: (context) => EditProfile());
+         case '/settings':
+        return MaterialPageRoute(builder: (context) => Settings());
+        // case '/about':
+        // return MaterialPageRoute(builder: (context) => About());
     }
   }
 }

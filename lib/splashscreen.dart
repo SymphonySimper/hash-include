@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import 'models/usermodel.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -20,6 +24,13 @@ class _SplashScreenState extends State<SplashScreen> {
     print('authentication called here');
   _auth.onAuthStateChanged.listen((user) async {
       if (user != null) {
+                       Firestore.instance.collection('users').document(user.uid).get().then((document){
+               print('User details');
+                print(document.data['name']);
+                 UserDetails().updateUser(document.data['name'],document.data['username'], document.data['email'], user.uid, document.data['profilepicurl'],user);
+               });
+
+
       
        Navigator.pushReplacementNamed(context, '/home');
       }else{
@@ -32,10 +43,28 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-          color: Colors.amber,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFFCD37FF), Color(0xFF40C9FF)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
           child: Center(
-            child: Text('HAsh INclude'),
-          )),
+            
+            child: Text(
+
+                '#Include',
+                style: GoogleFonts.poppins(
+                  fontWeight:FontWeight.w600,
+                  color:Colors.white,
+                  fontSize: 55,
+                ),
+              ),
+          ),
+          ),
     );
   }
 }

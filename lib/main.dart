@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hashinclude/playground.dart';
 
 import 'router.dart';
 
@@ -11,9 +12,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      
       title: 'Compile Anywhere',
       initialRoute: '/',
       onGenerateRoute: Router.generateRoute,
+      theme: ThemeData(unselectedWidgetColor: Colors.white),
     );
   }
 }

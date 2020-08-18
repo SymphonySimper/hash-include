@@ -6,14 +6,12 @@ import 'package:hashinclude/models/usermodel.dart';
 import 'package:hashinclude/widget.dart';
 
 class LoginPage extends StatefulWidget {
-  
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-
-  TextEditingController _emailController = new TextEditingController();
+   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
    final FirebaseAuth _auth = FirebaseAuth.instance;
   login(String email ,String password)async{
@@ -30,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
          
 
     } catch (e) {
-      // showError(e.message);
+      showError(e.message,context);
     }
   }
     @override
@@ -48,23 +46,35 @@ class _LoginPageState extends State<LoginPage> {
       }
     });
   }
-
-  @override 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-              colors: [Color(0xFFCD37FF), Color(0xFF40C9FF)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            )),
-            child: ListView(children: [
-              Stack(children: [
-                Container(
-                  padding: EdgeInsets.fromLTRB(0, 28, 0, 0),
-                  alignment: Alignment(0, 1),
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: ThemeColor().returnColor())),
+            ),
+            SizedBox(
+              height: 50,
+              child: ListTile(
+                leading: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                title: Align(
+                  alignment: Alignment(-0.3, 0),
                   child: Text(
                     'Sign in',
                     style: GoogleFonts.poppins(
@@ -74,154 +84,183 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                Container(
-                    padding: EdgeInsets.only(left: 5, top: 23),
-                    child: IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-//                          Navigator.pushReplacementNamed(context, '/intro');
-                          Navigator.of(context).pop();
-                        })),
-              ]),
-              Container(
-                padding: EdgeInsets.only(left: 15, right: 15, top: 65),
-                child: TextField(
-                  controller: _emailController,
-                  cursorColor: Colors.white,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(top: 15),
-                    hintText: 'email',
-                    hintStyle: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w200,
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
+              ),
+            ),
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 100,
                   ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(13, 15, 13, 0),
-                child: TextField(
-                  controller: _passwordController,
-                  cursorColor: Colors.white,
-                  style: TextStyle(color: Colors.white),
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(top: 15),
-                      hintText: 'password',
-                      hintStyle: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w200,
-                        fontSize: 14,
-                        color: Colors.white,
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white))),
-                ),
-              ),
-              Stack(children: [
-                Column(children: [
-                  Stack(children: [
-                    Container(
-                      padding: EdgeInsets.fromLTRB(15, 37, 230, 2),
-                      child: Text('No account? ',
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w200,
-                            color: Colors.white,
-                            fontSize: 14,
-                          )),
-                    ),
-                    Container(
-                        padding: EdgeInsets.only(left: 90, top: 24),
-                        child: FlatButton(
-                            onPressed: () {
-                              Navigator.of(context).pushNamed("/signup");
-                            },
-                            child: Text(' Create one!',
-                                style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                ))))
-                  ])
-                ]),
-                Positioned(
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(15, 93, 250, 0),
-                    child: Text('Forgot password?',
-                        style: GoogleFonts.poppins(
+                  Container(
+                    padding: EdgeInsets.only(left: 15, right: 15),
+                    child: TextField(
+                      controller: _emailController,
+                      cursorColor: Colors.white,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(top: 15),
+                        hintText: 'email',
+                        hintStyle: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w200,
                           color: Colors.white,
-                          fontWeight: FontWeight.w400,
                           fontSize: 14,
-                        )),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-                Positioned(
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(260, 80, 0, 0),
-                    child: RaisedButton(
-                      padding: EdgeInsets.fromLTRB(40, 7, 40, 7),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 15, right: 15),
+                    child: TextField(
+                      controller: _passwordController,
+                      cursorColor: Colors.white,
+                      obscureText: true,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(top: 15),
+                        hintText: 'password',
+                        hintStyle: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w200,
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 60,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed("/signup");
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(left: 15),
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'No account? ',
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w200,
+                              color: Colors.white,
+                              fontSize: 12,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: 'Create one!',
+                                  style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  )),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  SizedBox(
+                    height: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            padding: EdgeInsets.only(left: 15),
+                            child: Text(
+                              'Forgot Password?',
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            padding: EdgeInsets.only(left: 30, right: 15),
+                            child: RaisedButton(
+                              padding: EdgeInsets.fromLTRB(40, 7, 40, 7),
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(36))),
+                              onPressed: () {
+                                login(_emailController.text, _passwordController.text);
+                              },
+                              child: Text('Sign in',
+                                  style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xFF7277F1),
+                                    fontSize: 19,
+                                  )),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                    child: OrLine(),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                    child: Center(
+                        child: RaisedButton(
+                      padding: EdgeInsets.fromLTRB(30, 11, 30, 11),
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(36))),
-                      onPressed: () {
-                       login(_emailController.text, _passwordController.text);
-                      },
-                      child: Text('Sign in',
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFF7277F1),
-                            fontSize: 19,
-                          )),
-                    ),
+                      onPressed: () {},
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        alignment: Alignment.center,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Image.asset(
+                              'images/Google_image.png',
+                              scale: 2.5,
+                            ),
+                            Text('Sign in with Google',
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF7277F1),
+                                  fontSize: 17,
+                                )),
+                          ],
+                        ),
+                      ),
+                    )),
                   ),
-                ),
-              ]),
-
-//                    Buttons(
-//                text: 'hello',
-//                nav: '/intro',
-//              ),
-
-              Padding(
-                padding: const EdgeInsets.only(top: 60, left: 58.0),
-                child: OrLine(),
+                ],
               ),
-
-              Padding(
-                padding: const EdgeInsets.only(top: 48.0),
-                child: Container(
-                  // padding: const EdgeInsets.only(top: 60),
-                  child: Center(
-//                    padding: EdgeInsets.fromLTRB(170, 80, 10, 20),
-                      child: RaisedButton(
-                    padding: EdgeInsets.fromLTRB(30, 11, 30, 11),
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(36))),
-                    onPressed: () {
-                     
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.only(left: 26.0),
-                      child: Text('Sign in with Google',
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFF7277F1),
-                            fontSize: 17,
-                          )),
-                    ),
-                  ),),
-                ),
-              ),
-
-            ],),),
-      );
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

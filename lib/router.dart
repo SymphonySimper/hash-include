@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hashinclude/aboutpage.dart';
+import 'package:hashinclude/carousel.dart';
+import 'package:hashinclude/developerspage.dart';
 import 'package:hashinclude/editprofilepage.dart';
 import 'package:hashinclude/homepage.dart';
 import 'package:hashinclude/introPage.dart';
 import 'package:hashinclude/loginpage.dart';
 import 'package:hashinclude/myprogramspage.dart';
 import 'package:hashinclude/myquestions.dart';
-import 'package:hashinclude/programviewpage.dart';
-import 'package:hashinclude/questionviewpage.dart';
 import 'package:hashinclude/settingspage.dart';
 import 'package:hashinclude/setupprofile.dart';
 import 'package:hashinclude/signuppage.dart';
@@ -19,28 +20,35 @@ class Router {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (context) => SplashScreen());
-          case '/intro':
+      case '/intro':
         return MaterialPageRoute(builder: (context) => IntroPage());
-          case '/home':
+      case '/home':
         return MaterialPageRoute(builder: (context) => HomePage());
-        case '/login':
+      case '/login':
         return MaterialPageRoute(builder: (context) => LoginPage());
-        case '/signup':
+      case '/signup':
         return MaterialPageRoute(builder: (context) => SignupPage());
-        case '/setupprofile':
+      case '/setupprofile':
         return MaterialPageRoute(builder: (context) => SetupProfilePage());
-        case '/myquestions':
+      case '/myquestions':
         return MaterialPageRoute(builder: (context) => MyQuestions());
-        case '/myprograms':
+      case '/myprograms':
         return MaterialPageRoute(builder: (context) => MyPrograms());
-        case '/notifications':
+      case '/notifications':
         return MaterialPageRoute(builder: (context) => Notifications());
-        case '/editprofile':
+      case '/editprofile':
         return MaterialPageRoute(builder: (context) => EditProfile());
-         case '/settings':
+      case '/settings':
         return MaterialPageRoute(builder: (context) => Settings());
-        // case '/about':
-        // return MaterialPageRoute(builder: (context) => About());
+      case '/developers':
+        return MaterialPageRoute(
+            builder: (context) => ListWheelScrollViewApp());
+      case '/carousel':
+        return MaterialPageRoute(builder: (context) => OnBoardingPage());
+      case '/about':
+        return MaterialPageRoute(builder: (context) => About());
+      // case '/about':
+      // return MaterialPageRoute(builder: (context) => About());
     }
   }
 }

@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hashinclude/widgets/widgets.dart';
 
 import 'models/usermodel.dart';
 
@@ -22,49 +24,45 @@ class _SplashScreenState extends State<SplashScreen> {
 
   checkAuthentication() async {
     print('authentication called here');
-  _auth.onAuthStateChanged.listen((user) async {
+    _auth.onAuthStateChanged.listen((user) async {
       if (user != null) {
-                       Firestore.instance.collection('users').document(user.uid).get().then((document){
-               print('User details');
-                print(document.data['name']);
-                 UserDetails().updateUser(document.data['name'],document.data['username'], document.data['email'], user.uid, document.data['profilepicurl'],user);
-               });
+        Firestore.instance
+            .collection('users')
+            .document(user.uid)
+            .get()
+            .then((document) {
+          print('User details');
+          print(document.data['name']);
+          UserDetails().updateUser(
+              document.data['name'],
+              document.data['username'],
+              document.data['email'],
+              user.uid,
+              document.data['profilepicurl'],
+              user);
+        });
 
-
-      
-       Navigator.pushReplacementNamed(context, '/home');
-      }else{
-               Navigator.pushReplacementNamed(context, '/intro');
-
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        Navigator.pushReplacementNamed(context, '/carousel');
       }
-    });}
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFFCD37FF), Color(0xFF40C9FF)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+  
+    return BackgroundBox(
+      child: Center(
+        child: Text(
+          '#Include',
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+            fontSize: ScreenUtil().setSp(48),
           ),
-          child: Center(
-            
-            child: Text(
-
-                '#Include',
-                style: GoogleFonts.poppins(
-                  fontWeight:FontWeight.w600,
-                  color:Colors.white,
-                  fontSize: 55,
-                ),
-              ),
-          ),
-          ),
+        ),
+      ),
     );
   }
 }

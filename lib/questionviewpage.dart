@@ -1,284 +1,172 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hashinclude/widget.dart';
+import 'package:hashinclude/widgets/widgets.dart';
 
 class QuestionView extends StatefulWidget {
   final DocumentSnapshot document;
-  QuestionView({Key key,@required this.document}):super(key:key);
+  QuestionView({Key key, @required this.document}) : super(key: key);
   @override
   _QuestionViewState createState() => _QuestionViewState(this.document);
 }
 
 class _QuestionViewState extends State<QuestionView> {
-    final DocumentSnapshot document;
-_QuestionViewState(this.document);
- 
+  final DocumentSnapshot document;
+  _QuestionViewState(this.document);
+
   String currentLang = "Java";
+  bool burn = false;
+  int _currentLikes = 0;
+
+  void initState() {
+    super.initState();
+    setState(() {
+      _currentLikes = document['popularity'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: Stack(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: ThemeColor().returnColor())),
-          ),
-          SizedBox(
-            height: 50,
-            child: ListTile(
-              leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  print('i was called here');
-                  Navigator.of(context).pop();
-                },
-              ),
-              title: Align(
-                alignment: Alignment(0, 0),
-                child: Text(
-                  'Question',
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 30,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              
-            ),
-          ),
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 80,
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.43,
-                    width: MediaQuery.of(context).size.width * 0.91111111,
-                    child: Card(
-                      color: Colors.white,
-                      child: SingleChildScrollView(
-                        child: Column(
+
+    return BackgroundBox(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: TransparentAppBar(
+          title: "Question",
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0),
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    TitleAndDescriptionBox(
+                      avatar: FittedSmallAvatar(
+                        image: NetworkImage(document['avatar_link']),
+                      ),
+                      username: document['username'],
+                      programOrQuestion: '  asked on',
+                      date: document['creation_date'].toDate().toString(),
+                      titleContent: document['title'],
+                      descriptionContent: document['description'],
+                      button1: TagButton(
+                        name: "Screenshots",
+                        onPressed: () {},
+                      ),
+                      button2: TagButton(
+                        name: "Comments",
+                        onPressed: () {},
+                      ),
+                      button3: TagButton(
+                        name: "See Similar",
+                        onPressed: () {},
+                      ),
+                    ),
+                    Positioned(
+                      right: 16.w,
+                      child: SizedBox(
+                        width: 24.w,
+                        height: 56.h,
+                        child: Stack(
                           children: <Widget>[
-                            ListTile(
-                              leading: CircleAvatar(
-                                radius: 21,
-                                backgroundColor: Color(0xFF7277F1),
-                                child: CircleAvatar(
-                                  backgroundImage:
-                                     NetworkImage(document['avatar_link']),
-                                  radius: 20,
-                                ),
-                              ),
-                              title: RichText(
-                                text: TextSpan(
-                                    text: document['username'],
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                    ),
-                                    children: [
-                                      TextSpan(
-                                          text: '  asked on',
-                                          style: GoogleFonts.poppins(
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black54,
-                                          )),
-                                    ]),
-                              ),
-                              subtitle: Text(document['creation_date'].toDate().toString()),
-                              trailing: Icon(
-                                Icons.flash_on,
-                              ),
-                            ),
-                            Divider(
-                              color: Color(0xFF7277f1),
-                              height: 3,
-                            ),
-                            ExpansionTile(
-                           
-                              title: Text('Question'),
-                              children: <Widget>[
-                                Text(document['title']),
-                                
-                                 ],
-                            ),
-                            ExpansionTile(
-                              title: Text('Description'),
-                              children: <Widget>[
-                                
-                                Text(document['description']),
-                                ],
-                            ),
-                            SizedBox(
-height: 46,
-                            ),
-                            Card(
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border:
-                                            Border.all(color: Color(0xff72771f1)),
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(10)),
-                                      ),
-                                      height: MediaQuery.of(context).size.height *
-                                          0.0419,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.311,
-                                      child: Center(
-                                        child: Text(
-                                          'Screenshots',
-                                          style: GoogleFonts.poppins(
-                                            color: Color(0xff7277f1),
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: IconButton(
+                                onPressed: () {
+                                  print('i got clicked');
+                                  int currentLikes = 0;
+                                  burn
+                                      ? Firestore.instance.runTransaction(
+                                          (transaction) async {
+                                            DocumentSnapshot freshSnap =
+                                                await transaction
+                                                    .get(document.reference);
+                                            await transaction.update(
+                                              freshSnap.reference,
+                                              {
+                                                'popularity': freshSnap['popularity'] - 1,
+                                              },
+                                            );
+                                            currentLikes =
+                                                freshSnap['popularity'] - 1;
+                                          },
+                                        ).then((value) => setState(() {
+                                            print("inside - 1 () ");
+                                            _currentLikes = currentLikes;
+                                          }))
+                                      : Firestore.instance.runTransaction(
+                                          (transaction) async {
+                                            DocumentSnapshot freshSnap =
+                                                await transaction
+                                                    .get(document.reference);
+                                            await transaction.update(
+                                              freshSnap.reference,
+                                              {
+                                                'popularity': freshSnap['popularity'] + 1,
+                                              },
+                                            );
+                                            currentLikes =
+                                                freshSnap['popularity'] + 1;
+                                          },
+                                        ).then(
+                                          (value) => setState(
+                                            () {
+                                              print("inside + 1 () ");
+                                              _currentLikes = currentLikes;
+                                            },
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border:
-                                            Border.all(color: Color(0xff72771f1)),
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(10)),
-                                      ),
-                                      height: MediaQuery.of(context).size.height *
-                                          0.0419,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.311,
-                                      child: Center(
-                                        child: Text(
-                                          'Screenshots',
-                                          style: GoogleFonts.poppins(
-                                            color: Color(0xff7277f1),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border:
-                                            Border.all(color: Color(0xff72771f1)),
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(10)),
-                                      ),
-                                      height: MediaQuery.of(context).size.height *
-                                          0.0419,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.311,
-                                      child: Center(
-                                        child: Text(
-                                          'Screenshots',
-                                          style: GoogleFonts.poppins(
-                                            color: Color(0xff7277f1),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border:
-                                            Border.all(color: Color(0xff72771f1)),
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(10)),
-                                      ),
-                                      height: MediaQuery.of(context).size.height *
-                                          0.0419,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.311,
-                                      child: Center(
-                                        child: Text(
-                                          'Screenshots',
-                                          style: GoogleFonts.poppins(
-                                            color: Color(0xff7277f1),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border:
-                                            Border.all(color: Color(0xff72771f1)),
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(10)),
-                                      ),
-                                      height: MediaQuery.of(context).size.height *
-                                          0.0419,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.311,
-                                      child: Center(
-                                        child: Text(
-                                          'Screenshots',
-                                          style: GoogleFonts.poppins(
-                                            color: Color(0xff7277f1),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                        );
+                                  burn
+                                      ? setState(() {
+                                          burn = false;
+                                        })
+                                      : setState(() {
+                                          burn = true;
+                                        });
+                                },
+                                icon: Icon(
+                                  burn
+                                      ? MaterialCommunityIcons.star
+                                      : MaterialCommunityIcons.star_outline,
+                                  color: burn
+                                      ? Color(0xffF74C06)
+                                      : Color(0xffF74C06).withOpacity(0.5),
+                                  size: ScreenUtil().setSp(24),
                                 ),
                               ),
                             ),
+                            Positioned(
+                              bottom: 6.h,
+                              right: 0.w,
+                              child: Text(
+                                _currentLikes.toString(),
+                                style: GoogleFonts.poppins(
+                                  fontSize: ScreenUtil().setSp(10),
+                                  color: burn
+                                      ? Color(0xffF74C06)
+                                      : Color(0xffF74C06).withOpacity(0.5),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.width * 0.03125),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      width: MediaQuery.of(context).size.width * 0.9000111,
-                      color: Colors.white,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          // right: MediaQuery.of(context).size.width * 0.3,
-                          top: MediaQuery.of(context).size.height * 0.02,
-                        ),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Code',
-                              ),
-                              Text(document['program']),
-                             
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                 
-                ],
-              ),
+                  ],
+                ),
+                SizedBoxPadding(),
+                CodeBox(
+                  program: document['program'],
+                ),
+                SizedBoxPadding(),
+              ],
             ),
           ),
-        ],
-      )),
+        ),
+      ),
     );
   }
 }

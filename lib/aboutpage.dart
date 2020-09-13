@@ -1,331 +1,157 @@
-// import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hashinclude/widgets/widgets.dart';
 
+class About extends StatefulWidget {
+  @override
+  _AboutState createState() => _AboutState();
+}
 
-// class About extends StatefulWidget {
-//   @override
-//   _AboutState createState() => _AboutState();
-// }
+class _AboutState extends State<About> {
+  @override
+  Widget build(BuildContext context) {
+    return BackgroundBox(
+      appBar: TransparentAppBar(
+        title: "About",
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: Column(
+          children: [
+            SizedBoxPadding(),
+            LongButton(
+              useIcon: true,
+              title: "About Developers",
+              onPressed: () {
+                Navigator.pushNamed(context, '/developers');
+              },
+            ),
+            SizedBox(
+              height: 24.h,
+            ),
+            LongButton(
+              useIcon: true,
+              title: "About API",
+              onPressed: () {
+                _modalBottomSheetMenu(context);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-// class _AboutState extends State<About> {
-//     int _selectedItemIndex = 0;
-  
-  
-//     List<Widget> items = [
-//       Padding(
-//         padding: EdgeInsets.all(16),
-//         child: Container(
-//           padding: EdgeInsets.all(16),
-//           decoration: BoxDecoration(
-//             borderRadius: BorderRadius.circular(8),
-//             color: Colors.white,
-//           ),
-//           child: Row(
-//             children: <Widget>[
-//               CircleAvatar(
-//                 radius: 80,
-//                 backgroundImage: AssetImage(
-//                   'images/ashik.jpg',
-//                 ),
-//               ),
-//               SizedBox(
-//                 width: 16,
-//               ),
-//               Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: <Widget>[
-//                   Container(
-//                     width: MediaQuery.of(context).size.width / 3.0,
-//                     child: Text(
-//                       'Haja Ashik',
-//                       style: GoogleFonts.poppins(
-//                         textStyle: TextStyle(
-//                             color: Color(0xFF333333),
-//                             fontWeight: FontWeight.w600,
-//                             fontSize: 25),
-//                       ),
-//                     ),
-//                   ),
-//                   SizedBox(
-//                     height: 16,
-//                   ),
-//                   Container(
-//                     width: MediaQuery.of(context).size.width / 3.5,
-//                     child: Text(
-//                       "Hi I'm Ashik, I'm the senior developer in the team.Bow before me",
-//                       style: GoogleFonts.poppins(
-//                         textStyle: TextStyle(
-//                             color: Color(0xFF333333),
-//                             fontWeight: FontWeight.w400,
-//                             fontSize: 15),
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//       Padding(
-//         padding: EdgeInsets.all(16),
-//         child: Container(
-//           padding: EdgeInsets.all(16),
-//           decoration: BoxDecoration(
-//             borderRadius: BorderRadius.circular(8),
-//             color: Colors.white,
-//           ),
-//           child: Row(
-//             children: <Widget>[
-//               CircleAvatar(
-//                 radius: 80,
-//                 backgroundImage: AssetImage(
-//                   'images/prag.jpg',
-//                 ),
-//               ),
-//               SizedBox(
-//                 width: 16,
-//               ),
-//               Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: <Widget>[
-//                   Container(
-//                     width: MediaQuery.of(context).size.width / 3.0,
-//                     child: Text(
-//                       'Pragati',
-//                       style: GoogleFonts.poppins(
-//                         textStyle: TextStyle(
-//                             color: Color(0xFF333333),
-//                             fontWeight: FontWeight.w600,
-//                             fontSize: 25),
-//                       ),
-//                     ),
-//                   ),
-//                   SizedBox(
-//                     height: 16,
-//                   ),
-//                   Container(
-//                     width: MediaQuery.of(context).size.width / 3.5,
-//                     child: Text(
-//                       "Hi I'm Pragati, Front-end Developer",
-//                       style: GoogleFonts.poppins(
-//                         textStyle: TextStyle(
-//                             color: Color(0xFF333333),
-//                             fontWeight: FontWeight.w400,
-//                             fontSize: 15),
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//       Padding(
-//         padding: EdgeInsets.all(16),
-//         child: Container(
-//           padding: EdgeInsets.all(16),
-//           decoration: BoxDecoration(
-//             borderRadius: BorderRadius.circular(8),
-//             color: Colors.white,
-//           ),
-//           child: Row(
-//             children: <Widget>[
-//               CircleAvatar(
-//                 radius: 80,
-//                 backgroundImage: AssetImage(
-//                   'images/sharanya.jpg',
-//                 ),
-//               ),
-//               SizedBox(
-//                 width: 16,
-//               ),
-//               Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: <Widget>[
-//                   Container(
-//                     width: MediaQuery.of(context).size.width / 3.0,
-//                     child: Text(
-//                       'Sharanya',
-//                       style: GoogleFonts.poppins(
-//                         textStyle: TextStyle(
-//                             color: Color(0xFF333333),
-//                             fontWeight: FontWeight.w600,
-//                             fontSize: 25),
-//                       ),
-//                     ),
-//                   ),
-//                   SizedBox(
-//                     height: 16,
-//                   ),
-//                   Container(
-//                     width: MediaQuery.of(context).size.width / 3.5,
-//                     child: Text(
-//                       "Hi I'm sharanya, I'm the web desinger for this app",
-//                       style: GoogleFonts.poppins(
-//                         textStyle: TextStyle(
-//                             color: Color(0xFF333333),
-//                             fontWeight: FontWeight.w400,
-//                             fontSize: 15),
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//       Padding(
-//         padding: EdgeInsets.all(16),
-//         child: Container(
-//           padding: EdgeInsets.all(16),
-//           decoration: BoxDecoration(
-//             borderRadius: BorderRadius.circular(8),
-//             color: Colors.white,
-//           ),
-//           child: Row(
-//             children: <Widget>[
-//               CircleAvatar(
-//                 radius: 80,
-//                 backgroundImage: AssetImage(
-//                   'images/senthil.jpg',
-//                 ),
-//               ),
-//               SizedBox(
-//                 width: 16,
-//               ),
-//               Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: <Widget>[
-//                   Container(
-//                     width: MediaQuery.of(context).size.width / 3.0,
-//                     child: Text(
-//                       'senthil balaji',
-//                       style: GoogleFonts.poppins(
-//                         textStyle: TextStyle(
-//                             color: Color(0xFF333333),
-//                             fontWeight: FontWeight.w600,
-//                             fontSize: 25),
-//                       ),
-//                     ),
-//                   ),
-//                   SizedBox(
-//                     height: 16,
-//                   ),
-//                   Container(
-//                     width: MediaQuery.of(context).size.width / 3.5,
-//                     child: Text(
-//                       "Hi I'm senthil balaji I'm the designer for this app",
-//                       style: GoogleFonts.poppins(
-//                         textStyle: TextStyle(
-//                             color: Color(0xFF333333),
-//                             fontWeight: FontWeight.w400,
-//                             fontSize: 15),
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//       Padding(
-//         padding: EdgeInsets.all(16),
-//         child: Container(
-//           padding: EdgeInsets.all(16),
-//           decoration: BoxDecoration(
-//             borderRadius: BorderRadius.circular(8),
-//             color: Colors.white,
-//           ),
-//           child: Row(
-//             children: <Widget>[
-//               CircleAvatar(
-//                 radius: 80,
-//                 backgroundImage: AssetImage(
-//                   'images/sanghavigupta.jpg',
-//                 ),
-//               ),
-//               SizedBox(
-//                 width: 16,
-//               ),
-//               Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: <Widget>[
-//                   Container(
-//                     width: MediaQuery.of(context).size.width / 3.0,
-//                     child: Text(
-//                       'Sanghavi',
-//                       style: GoogleFonts.poppins(
-//                         textStyle: TextStyle(
-//                             color: Color(0xFF333333),
-//                             fontWeight: FontWeight.w600,
-//                             fontSize: 25),
-//                       ),
-//                     ),
-//                   ),
-//                   SizedBox(
-//                     height: 16,
-//                   ),
-//                   Container(
-//                     width: MediaQuery.of(context).size.width / 3.5,
-//                     child: Text(
-//                       "Hi I'm Sanghavi, ABOUT IS LOADING...... ",
-//                       style: GoogleFonts.poppins(
-//                         textStyle: TextStyle(
-//                             color: Color(0xFF333333),
-//                             fontWeight: FontWeight.w400,
-//                             fontSize: 15),
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     ];
-//     @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Stack(
-//         children: <Widget>[
-//           Container(
-//             width: MediaQuery.of(context).size.width,
-//             height: MediaQuery.of(context).size.height,
-//             decoration: BoxDecoration(
-//                 gradient: LinearGradient(
-//               colors: [Color(0xFFCD37FF), Color(0xFF40C9FF)],
-//               begin: Alignment.topLeft,
-//               end: Alignment.bottomRight,
-//             )),
-//           ),
-//           ListWheelScrollView(
-//             perspective: 0.01,
-//             itemExtent: 250,
-
-//             children: items,
-// //              useMagnifier: true,
-
-//             offAxisFraction: -0.5,
-
-//             physics: BouncingScrollPhysics(),
-
-//             diameterRatio: 8,
-
-//             squeeze: 0.6,
-
-//             onSelectedItemChanged: (index) => {
-//               setState(() {
-//                 _selectedItemIndex = index;
-//               })
-//             },
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+void _modalBottomSheetMenu(context) {
+  showModalBottomSheet(
+    backgroundColor: Colors.transparent,
+    context: context,
+    builder: (builder) {
+      return SizedBox(
+        height: 320.h,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(36.h),
+            ),
+          ),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 47.h,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 3.h,
+                        ),
+                        child: Image.asset(
+                          'assets/images/api/jDoodle_logo.png',
+                        ),
+                      ),
+                      SizedBox(
+                        height: 47.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.h),
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: Icon(
+                            Icons.keyboard_arrow_down,
+                            size: ScreenUtil().setSp(24),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                height: 1.h,
+                color: Color(0xff333333),
+              ),
+              ClipRRect(
+                clipBehavior: Clip.hardEdge,
+                child: SizedBox(
+                  height: 272.h,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 16.h,
+                        horizontal: 16.w,
+                      ),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'What is JDoodle.com',
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w600,
+                              fontSize: ScreenUtil().setSp(14),
+                              color: Color(0xff333333),
+                            ),
+                            children: [
+                              TextSpan(
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: ScreenUtil().setSp(14),
+                                  color: Color(0xff333333),
+                                ),
+                                children: [
+                                  TextSpan(
+                                      text:
+                                          "\n\nJDoodle.com is an online education tool."
+                                          "The aim of this website to help students learn programming online."
+                                          "JDoodle offers following services:"
+                                          "\n\n    *Online Compiler and IDE."
+                                          "\n\n    *Online Terminals for Databases."
+                                          "\n\n    *Compiler API."
+                                          "\n\n    *Online Assessment."
+                                          "\n\n    *Online Course (Coming Soon).")
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}

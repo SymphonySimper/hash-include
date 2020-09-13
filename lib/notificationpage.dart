@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:hashinclude/widget.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hashinclude/widgets/widgets.dart';
 
 class Notifications extends StatefulWidget {
   @override
@@ -11,118 +10,76 @@ class Notifications extends StatefulWidget {
 class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-          colors: [Color(0xFFCD37FF), Color(0xFF40C9FF)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        )),
-        child: Column(children: [
-          Padding(
-            padding: EdgeInsets.only(
-              top:MediaQuery.of(context).size.height*0.08,
-              left:MediaQuery.of(context).size.width*0.06,
-            ),
-            child: Row(
-//              mainAxisAlignment: MainAxisAlignment.center,
-//              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                      size: 27,
+
+    return BackgroundBox(
+      resizeToAvoidBottomInset: false,
+      appBar: TransparentAppBar(
+        title: "Notifications",
+      ),
+      child: Column(children: [
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.w),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.h),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.h)),
+                child: ListView(
+                  children: [
+                    NotificationsCard(
+                      text: 'Piu has commented on your post',
                     ),
-                  ),
-                  Padding(
-                    padding:  EdgeInsets.only(
-                      left:MediaQuery.of(context).size.width*0.065,
-                      ),
-                    child: Text(
-                      'Notifications',
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 34,
-                        color: Colors.white,
-                      ),
+                    NotificationsCard(
+                      text: 'Piu has commented on your post',
                     ),
-                  ),
-                ]),
-          ),
-//
-          Stack(children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width*0.96,
-              height:  MediaQuery.of(context).size.height*0.76,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 1.0,
-                  top: 10,
-                ),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
-                  child: ListView(
-                    children: [
-                      NotificationsCard(
-                        text: 'Piu has commented on your post',
-                      ),
-                      NotificationsCard(
-                        text: 'Piu has commented on your post',
-                      ),
-                      NotificationsCard(
-                        text: 'Piu has commented on your post',
-                      ),
-                      NotificationsCard(
-                        text: 'Piu has commented on your post',
-                      ),
-                      NotificationsCard(
-                        text: 'Piu has commented on your post',
-                      ),
-                      NotificationsCard(
-                        text: 'Piu has commented on your post',
-                      ),
-                      NotificationsCard(
-                        text: 'Piu has commented on your post',
-                      ),
-                      NotificationsCard(
-                        text: 'Piu has commented on your post',
-                      ),
-                      NotificationsCard(
-                        text: 'Piu has commented on your post',
-                      ),
-                      NotificationsCard(
-                        text: 'Piu has commented on your post',
-                      ),
-                      NotificationsCard(
-                        text: 'Piu has commented on your post',
-                      ),
-                      NotificationsCard(
-                        text: 'Piu has commented on your post',
-                      ),
-                      NotificationsCard(
-                        text: 'Piu has commented on your post',
-                      ),
-                      NotificationsCard(
-                        text: 'Piu has commented on your post',
-                      ),
-                      NotificationsCard(
-                        text: 'Piu has commented on your post',
-                      ),
-                    ],
-                  ),
+                    NotificationsCard(
+                      text: 'Piu has commented on your post',
+                    ),
+                    NotificationsCard(
+                      text: 'Piu has commented on your post',
+                    ),
+                    NotificationsCard(
+                      text: 'Piu has commented on your post',
+                    ),
+                    NotificationsCard(
+                      text: 'Piu has commented on your post',
+                    ),
+                    NotificationsCard(
+                      text: 'Piu has commented on your post',
+                    ),
+                    NotificationsCard(
+                      text: 'Piu has commented on your post',
+                    ),
+                    NotificationsCard(
+                      text: 'Piu has commented on your post',
+                    ),
+                    NotificationsCard(
+                      text: 'Piu has commented on your post',
+                    ),
+                    NotificationsCard(
+                      text: 'Piu has commented on your post',
+                    ),
+                    NotificationsCard(
+                      text: 'Piu has commented on your post',
+                    ),
+                    NotificationsCard(
+                      text: 'Piu has commented on your post',
+                    ),
+                    NotificationsCard(
+                      text: 'Piu has commented on your post',
+                    ),
+                    NotificationsCard(
+                      text: 'Piu has commented on your post',
+                    ),
+                  ],
                 ),
               ),
             ),
-          ]),
-        ]),
-      ),
+          ),
+        ),
+      ]),
     );
   }
 }

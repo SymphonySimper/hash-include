@@ -45,7 +45,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           whiteIcon: true,
                           iconHeight: 32.h,
                           iconWidth: 32.w,
-                    
                           avatar: UserDetails().profilepic == null
                               ? NetworkImage(
                                   'https://cdn.auth0.com/blog/illustrations/flutter.png')
@@ -79,7 +78,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                         Text(
-                          UserDetails().email,
+                          UserDetails().email == null
+                              ? 'No Email'
+                              : UserDetails().email,
                           style: GoogleFonts.poppins(
                             color: Color(0xFF7277F1),
                             fontWeight: FontWeight.w400,

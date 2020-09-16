@@ -106,7 +106,6 @@ class _AddProgramState extends State<AddProgram> {
 
   @override
   Widget build(BuildContext context) {
- 
     return BackgroundBox(
       appBar: TransparentAppBar(
         title: "Post Your Program",
@@ -141,7 +140,7 @@ class _AddProgramState extends State<AddProgram> {
                   onSaved: (input) => _programDescription = input,
                 ),
                 SizedBoxPadding(),
-                InputBox(
+                CodeInputBox(
                   hintText: 'Enter your program',
                   validator: (input) {
                     if (input.isEmpty) {

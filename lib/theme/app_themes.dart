@@ -89,7 +89,7 @@ class AppTheme {
   static TextStyle _lightCodeText = TextStyle(
     fontFamily: 'SourceCodePro',
     color: _lightSecondaryColor,
-    fontSize: 12.ssp,
+    fontSize: 14.ssp,
   );
   static TextStyle _lightHintText = TextStyle(
     fontFamily: 'Poppins',

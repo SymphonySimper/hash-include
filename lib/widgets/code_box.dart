@@ -43,10 +43,7 @@ class CodeBox extends StatelessWidget {
                       alignment: Alignment.topLeft,
                       child: Text(
                         program,
-                        style: GoogleFonts.sourceCodePro(
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xFF333333),
-                            fontSize: ScreenUtil().setSp(12)),
+                        style: Theme.of(context).textTheme.headline4,
                       ),
                     ),
                   ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hashinclude/screenshots.dart';
 import 'package:hashinclude/widgets/widgets.dart';
 
 class QuestionView extends StatefulWidget {
@@ -54,7 +55,15 @@ class _QuestionViewState extends State<QuestionView> {
                       descriptionContent: document['description'],
                       button1: TagButton(
                         name: "Screenshots",
-                        onPressed: () {},
+                      
+                        onPressed:
+                         () {  print("i got clicked");
+                           Navigator.of(context).push(
+                             
+                                        MaterialPageRoute(
+                                            builder: (context) => Screen(
+                                                questionId: this.document.documentID)));
+                        },
                       ),
                       button2: TagButton(
                         name: "Comments",
@@ -62,7 +71,9 @@ class _QuestionViewState extends State<QuestionView> {
                       ),
                       button3: TagButton(
                         name: "See Similar",
-                        onPressed: () {},
+                        onPressed: () {
+                           print("i got clicked");
+                        },
                       ),
                     ),
                     Positioned(
@@ -155,7 +166,18 @@ class _QuestionViewState extends State<QuestionView> {
                         ),
                       ),
                     ),
+                  
                   ],
+                ),
+                FlatButton(child: Text("hello"),
+                onPressed: (){
+                Navigator.of(context).push(
+                             
+                                        MaterialPageRoute(
+                                            builder: (context) => Screen(
+                                                questionId: this.document.documentID)));
+                },
+                
                 ),
                 SizedBoxPadding(),
                 CodeBox(

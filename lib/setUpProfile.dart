@@ -26,10 +26,13 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
   setUpProfile(String name, String username) async {
     if (sampleImage != null) {
       print('i was dalled here');
+       
       print(sampleImage);
       String imageName = UserDetails().uid + '.jpg';
+      
       final StorageReference firebaseStorageRef =
           FirebaseStorage.instance.ref().child('Avatar/$imageName');
+          print(imageName + 'now im trying');
       StorageUploadTask task = firebaseStorageRef.putFile(sampleImage);
       StorageTaskSnapshot snapshotTask = await task.onComplete;
       downloadUrl = await snapshotTask.ref.getDownloadURL();
@@ -44,8 +47,12 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
     Firestore.instance
         .collection('users')
         .document(UserDetails().uid)
-        .updateData(
-            {'name': name, 'username': username, 'profilepicurl': downloadUrl});
+        .updateData({
+      'name': name,
+      'username': username,
+      'profilepicurl': downloadUrl,
+    });
+    
     UserDetails().name = name;
     UserDetails().username = username;
     UserDetails().profilepic = downloadUrl;
@@ -97,6 +104,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
 
     setState(() {
       sampleImage = File(tempImage.path);
+      Navigator.pop(context);
       // imageUrl='uploaded';
     });
   }
@@ -106,12 +114,14 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
 
     setState(() {
       sampleImage = File(tempImage.path);
+      Navigator.pop(context);
       // imageUrl='uploaded';
     });
   }
 
   @override
   Widget build(BuildContext context) {
+   
     return BackgroundBox(
       resizeToAvoidBottomInset: false,
       appBar: TransparentAppBar(

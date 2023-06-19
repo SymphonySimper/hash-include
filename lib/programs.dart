@@ -39,7 +39,10 @@ class _ProgramsState extends State<Programs> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return BackgroundBox(
+      
       resizeToAvoidBottomInset: false,
       appBar: SearchBarAndNotification(
         controller: _searchController,
@@ -109,17 +112,21 @@ class _ProgramsState extends State<Programs> {
                   height: 435.h,
                   width: 328.w,
                   child: StreamBuilder(
+                            //  print(snapshot.data.documents[index]['title']);
+                          
                     stream: db
                         .collection('programs')
                         .orderBy('creation_date', descending: true)
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
+                                 print( 'ash::::::::::');
                         return Center(
                           child: CircularProgressIndicator(),
                         );
                       }
                       return ListView.builder(
+                       
                         itemCount: snapshot.data.documents.length,
                         itemBuilder: (context, index) => GestureDetector(
                           onTap: () {

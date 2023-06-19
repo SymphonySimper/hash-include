@@ -85,7 +85,7 @@ class _ProgramViewState extends State<ProgramView> {
                     ),
                   ),
                   Positioned(
-                    right: 16.w,
+                      right: 16.w,
                     child: SizedBox(
                       width: 24.w,
                       height: 56.h,

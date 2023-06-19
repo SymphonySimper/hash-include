@@ -86,8 +86,7 @@ class _PlayGroundState extends State<PlayGround> {
   }
 
   Future showResult(BuildContext context, String program, String input) async {
-    var response = await CompileCode()
-        .getOutput(program, input, currentLangCode, currentLangVI);
+    var response = await CompileCode().getOutput(program, input, currentLangCode, currentLangVI);
     print(response);
     var output = response['output'];
     if (pr.isShowing()) {

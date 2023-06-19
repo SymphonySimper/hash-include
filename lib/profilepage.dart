@@ -18,7 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
         title: "My Profile",
         actionIcon: Icons.settings,
         actionOnPressed: () {
-          Navigator.pushReplacementNamed(context, '/settings');
+          Navigator.pushNamed(context, '/settings');
         },
       ),
       child: SingleChildScrollView(

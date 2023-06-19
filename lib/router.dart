@@ -12,7 +12,6 @@ import 'package:hashinclude/settingspage.dart';
 import 'package:hashinclude/setupprofile.dart';
 import 'package:hashinclude/signuppage.dart';
 import 'package:hashinclude/splashscreen.dart';
-
 import 'notificationpage.dart';
 
 class Router {

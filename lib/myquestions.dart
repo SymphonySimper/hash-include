@@ -33,7 +33,7 @@ class _MyQuestionsState extends State<MyQuestions> {
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child:Text('u havent added any questions'),
                     );
                   }
                   return ListView.builder(
